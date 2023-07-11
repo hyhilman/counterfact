@@ -22,6 +22,11 @@ export function koaMiddleware(dispatcher, options = {}, proxy = koaProxy) {
     /* eslint-disable require-atomic-updates */
     ctx.body = response.body;
     ctx.status = response.status ?? HTTP_STATUS_CODE_OK;
+
+    if (!!response.headers) {
+      Object.entries(response.headers)
+        .forEach(([hkey, hval]) => ctx.set(hkey, hval));
+    }
     /* eslint-enable require-atomic-updates */
 
     return undefined;
