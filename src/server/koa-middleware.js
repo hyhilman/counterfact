@@ -19,13 +19,18 @@ export function koaMiddleware(dispatcher, options = {}, proxy = koaProxy) {
       req: ctx.req,
     });
 
+    /* eslint-disable no-console */
+    console.log(ctx.request, response);
+    /* eslint-disable no-console */
+
     /* eslint-disable require-atomic-updates */
     ctx.body = response.body;
     ctx.status = response.status ?? HTTP_STATUS_CODE_OK;
 
     if (!!response.headers) {
-      Object.entries(response.headers)
-        .forEach(([hkey, hval]) => ctx.set(hkey, hval));
+      Object.entries(response.headers).forEach(([hkey, hval]) =>
+        ctx.set(hkey, hval)
+      );
     }
     /* eslint-enable require-atomic-updates */
 
